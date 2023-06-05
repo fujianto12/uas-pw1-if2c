@@ -4,11 +4,16 @@ const mongoose = require('mongoose')
 const Product = require("./models/productModels")
 const Review = require('./models/reviewProduct')
 const port = 3000
+const cors = require('cors')
 
 // AGAR DATA MUNCUL DALAM FORMAT JSON 
 app.use(express.json())
 // ketika ingin mengubah data tapi tidak dalam bentuk format
 app.use(express.urlencoded({extended:false}))
+
+app.use(cors())
+
+
 
 // COLECTION 1
 app.get('/products', async(req, res) => {
