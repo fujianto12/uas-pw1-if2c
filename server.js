@@ -18,7 +18,7 @@ app.use(cors())
 // COLECTION 1
 app.get('/products', async(req, res) => {
     try {
-        const products = await Product.find({})
+        const products = await Product.find({}).limit(4)
         res.status(200).json(products)
     } catch (error) {
         res.status(500).json({message:error.message})
