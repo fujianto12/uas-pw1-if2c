@@ -19,7 +19,7 @@ app.use(cors())
 // trend product
 app.get('/trendItem', async(req, res) => {
     try {
-        const trendProducts = await Product.find({}).limit(4)
+        const trendProducts = await Product.find({})// limit(4) untuk membatasi data api
         res.status(200).json(trendProducts)
     } catch (error) {
         res.status(500).json({message:error.message})
