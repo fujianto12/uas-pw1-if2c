@@ -17,6 +17,16 @@ app.use(cors())
 
 // COLECTION 1
 // trend product
+
+Router.get('/detailProduct/:id', async (req, res) => {
+  try {
+    const data = await Model.findById(req.params.id);
+    res.json(data)
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+})
+
 app.get('/trendItem', async(req, res) => {
     try {
         const trendProducts = await Product.find({})// limit(4) untuk membatasi data api
