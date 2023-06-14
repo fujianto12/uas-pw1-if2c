@@ -92,7 +92,7 @@ app.get('/review/:id', async(req, res) => {
   }
 })
 
-app.get('/productReview/:id', async(req, res) => {
+app.get('/productReviewKemejaFlanel/:id', async(req, res) => {
   try {
       const {id} = req.params
       const review = await Review.find({
