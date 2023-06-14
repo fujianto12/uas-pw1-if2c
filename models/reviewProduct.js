@@ -17,6 +17,10 @@ const reviewSchema = mongoose.Schema(
         comment:{
             type:String,
             required:true,
+        },
+        productId:{
+            type:String,
+            required:true,
         }
     },
     {

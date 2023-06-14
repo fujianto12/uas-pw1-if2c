@@ -18,7 +18,7 @@ app.use(cors())
 // COLECTION 1
 // trend product
 
-// router.get('/detailProduct/:id', async (req, res) => {
+// Router.get('/Products/:id', async (req, res) => {
 //   try {
 //     const data = await Model.findById(req.params.id);
 //     res.json(data)
@@ -85,6 +85,19 @@ app.get('/review/:id', async(req, res) => {
   try {
       const {id} = req.params
       const review = await Review.findById(id)
+      res.status(200).json(review)
+  } catch (error) {
+      console.log(error.message);
+      res.status(500).json({message:error.message})
+  }
+})
+
+app.get('/productReview/:id', async(req, res) => {
+  try {
+      const {id} = req.params
+      const review = await Review.find({
+        productId: id
+      })
       res.status(200).json(review)
   } catch (error) {
       console.log(error.message);
