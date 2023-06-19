@@ -4,41 +4,30 @@ const mongoose = require('mongoose')
 const Product = require("./models/productModels")
 const Review = require('./models/reviewProduct')
 const port = 3000
-const cors = require('cors')
+
+
 
 // AGAR DATA MUNCUL DALAM FORMAT JSON 
 app.use(express.json())
 // ketika ingin mengubah data tapi tidak dalam bentuk format
 app.use(express.urlencoded({extended:false}))
 
+// untuk membuka cors yang di blok
+const cors = require('cors')
 app.use(cors())
 
 
-
-// COLECTION 1
-// trend product
-
-// Router.get('/Products/:id', async (req, res) => {
-//   try {
-//     const data = await Model.findById(req.params.id);
-//     res.json(data)
-//   } catch (error) {
-//     res.status(500).json({message: error.message})
-//   }
-// })
-
-app.get('/trendItem', async(req, res) => {
-    try {
-        const trendProducts = await Product.find({})// limit(4) untuk membatasi data api
-        res.status(200).json(trendProducts)
-    } catch (error) {
-        res.status(500).json({message:error.message})
-    }
-  })
+// Colection pertama : Produk
 
   app.get('/products', async(req, res) => {
     try {
-        const products = await Product.find({})
+        const { search } = req.query
+        let products = {};
+        if (search != null || search !== ""){
+          products = await Product.find({ name: { $regex: '.*' + search + '.*' } }).exec();
+        } else {
+          products = await Product.find({}) // find = untuk mencari  
+        }
         res.status(200).json(products)
     } catch (error) {
         res.status(500).json({message:error.message})
@@ -56,7 +45,6 @@ app.get('/trendItem', async(req, res) => {
         res.status(500).json({message:error.message})
     }
   })
-
 
 // UNTUK MENAMBAHKAN ISI DARI DATABASE MONGODB
   app.post('/products', async(req, res) => {
@@ -92,6 +80,7 @@ app.get('/review/:id', async(req, res) => {
   }
 })
 
+// untuk mengambil data review berdasarkan id api product masing masing
 app.get('/productReview/:id', async(req, res) => {
   try {
       const {id} = req.params
@@ -106,7 +95,7 @@ app.get('/productReview/:id', async(req, res) => {
 })
 
 
-// UNTUK MENAMBAHKAN ISI DARI DATABASE MONGODB
+// membuat isi review di postman dengan menggunakan productId.  productId isi ny ambil id product  
 app.post('/review', async(req, res) => {
   try {
       const review = await Review.create(req.body)
