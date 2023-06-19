@@ -23,7 +23,7 @@ app.use(cors())
     try {
         const { search } = req.query
         let products = {};
-        if (search != null || search !== ""){
+        if (search != undefined){
           products = await Product.find({ name: { $regex: '.*' + search + '.*' } }).exec();
         } else {
           products = await Product.find({}) // find = untuk mencari  
